@@ -1,7 +1,7 @@
 FROM node:22.20.0
 WORKDIR /app
 EXPOSE 5422
-COPY package.json  ./
+COPY package.json ./
 RUN npm install
 COPY . .
-CMD ["npm", "start"]
+CMD ["npx", "nodemon", "index.ts"]
