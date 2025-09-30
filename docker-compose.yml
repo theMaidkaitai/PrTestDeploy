@@ -9,19 +9,31 @@ services:
     volumes:
       - './nginx.conf:/etc/nginx/nginx.conf'
     depends_on:
-      - backend
-      - frontend
+      backend:
+        condition: service_healthy
+      frontend:
+        condition: service_healthy
     networks:
       - deploy
 
   backend:
     build:
       context: ./service
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5422/random"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
     networks:
       - deploy
 
   frontend:
     build:
       context: ./client
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3211"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
     networks:
       - deploy
