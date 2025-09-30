@@ -4,7 +4,8 @@ import {useState} from "react";
 
 function App() {
 
-    const backendUrl = 'http://localhost:5422'
+    const backendUrl = '/api'
+
     const [randomNumbers, setRandomNumbers] = useState<null | number>(null)
     const [randomMathNumbers, setRandomMathNumbers] = useState<null | number>(null)
     const [history, setHistory] = useState<number[]>([])
